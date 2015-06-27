@@ -207,7 +207,7 @@ Page {
         }
 
         PullDownMenu {
-            property bool showMenu: ((page.originalContent !== "") || (page.contentUrl !== ""))
+            property bool showMenu: ((page.originalContent !== "") || (page.contentUrl !== "") || feedly.currentEntryIndex > 0)
 
             visible: showMenu
 
@@ -221,6 +221,31 @@ Page {
                 visible: (page.contentUrl !== "")
                 text: qsTr("Open original link")
                 onClicked: Qt.openUrlExternally(page.contentUrl);
+            }
+
+            MenuItem {
+                visible: (feedly.currentEntryIndex > 0)
+                text: qsTr("Previous article")
+                onClicked: {
+                    feedly.setCurrentEntry(feedly.currentEntryIndex-1);
+                    feedly.markEntry(feedly.currentEntry.id, "markAsRead");
+                    articleView.scrollToTop();
+                }
+            }
+        }
+
+        PushUpMenu {
+            property bool showMenu: (feedly.currentEntryIndex < feedly.articlesListModel.count - 1)
+
+            visible: showMenu
+
+            MenuItem {
+                text: qsTr("Next article")
+                onClicked: {
+                    feedly.setCurrentEntry(feedly.currentEntryIndex+1);
+                    feedly.markEntry(feedly.currentEntry.id, "markAsRead");
+                    articleView.scrollToTop();
+                }
             }
         }
 

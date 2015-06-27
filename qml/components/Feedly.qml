@@ -22,6 +22,7 @@ QtObject {
     property bool busy: false
     property var pendingRequest: null
     property var currentEntry: null
+    property var currentEntryIndex: 0
     property string continuation: ""
     property int totalUnread: 0
     property int uniqueFeeds: 0
@@ -478,6 +479,18 @@ QtObject {
         }
         // DEBUG
         // console.log(JSON.stringify(retObj));
+    }
+
+    /*
+     * Switch current entry in articlesListModel.
+     */
+    function setCurrentEntry(articleIdx) {
+        if (articleIdx >= 0 && articleIdx < articlesListModel.count) {
+            currentEntryIndex = articleIdx;
+            currentEntry = articlesListModel.get(articleIdx);
+        } else {
+            console.log("Bad index in feedly.setCurrentEntry");
+        }
     }
 
     /*

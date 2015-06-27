@@ -163,7 +163,7 @@ Page {
                     feedly.markEntry(id, "markAsRead");
                     page.unreadCount--;
                 }
-                feedly.currentEntry = articlesListView.model.get(index);
+                feedly.setCurrentEntry(index);
                 pageStack.push(Qt.resolvedUrl("ArticlePage.qml"));
             }
 
